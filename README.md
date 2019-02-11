@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/ArcadeAnalytics/arcade-data.svg?branch=master)](https://travis-ci.org/ArcadeAnalytics/arcade-data)
+
 # ArcadeAnalytics Data 
 
 Include in your project:
