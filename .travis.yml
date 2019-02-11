@@ -1,14 +1,15 @@
 language: java
-env:
-  global:
-  - secure: o8gjyX0fXAtfBnAEW70rzc7jFp/+0MlazAbvUL8+HpimQRJfqifJf4OYVKr2oUqEEagakEig4yJn2Q6ezdKciRmmfJutL/h6xjGEEI4Q5YDbE71KeZrEVsjBQZP+5hUc+6cYBDO9pLR68CioVJp/Ec7rQ7SasUyuYEnb5nBQRadu6pa+HSD250HkAdSrbbcauHPz0eLHNYp0jNoYf2V7SyaTS4z4aRPXYoUdCtcdCCCVS+lbDq8YJ6tVuv9mrl2dFhv+iusvyjH+W2jwlJfAac40A9eknZ1eHuzIlIIFRDKhaPNVmv5ELf3q5jcaquP1k7FefsnOW6voB+1ulNlizY7qMsTK34IytPSWH4iRsNzArtsQQS2QMrFyLRWUHXcUqEjHi0oX2Zcl/JpztpABbtfMtQHq1683KkS517IySXNiGgzb90AmqYLUkfwKn5l66CTyrxbyGJ+Q5e1Llrs3vhgfyXhy6hLVj22K+egxQZE3PIIF907DBkPsWUPpKk/A0lurGp7H+SJiMkrde3HyZJNdzO9dlAfXIfQ8pXcUsA7mJpLMGGqeU05ZwU6/SMtPxTHpK64rAJZqXZ/ZoFkBAlP5t7mqj7D8EzA87HKsk0pFtDl4fUmM81VUOrFCmQy9N0gSYs4keCXmgxBIWTFNwFnIqYJiRhQjHOlIYaCisg0=
-  - secure: B/XEqa26Q2jdJAPnLdARzuxUtRTbPXl0M12mrz7r3+3YJpzzkRK2BebgISMjOiWr/33hneL/N6vplve6jrVVdzvT6gSdbPo/VLctEbxF4azHGNvyvPP5XrJy4FCY/ZbbXJotiuFO7x0YD4D9HtbdZ560KQq8tyRSdpZ7u103m0Ix81oVgTZiNxkmXksgQTV0spnEZUsS9fnPfT1bCXEJNeHwTrsUd+5iErUls4w4rYTdFyxptmwFZyw7A7o0/vcgqwoRCPsdluHPtHydfJGDniP7fL+sfdepONXiTAk3nGaMvfl0xcwf3poCHb8XCm22W4AJlSesooKq8LtsiXWqpoiUEiMt94fO3pC4/Foi02B2kjQAp+5EJ3i4N/Y126Yn7chdr9nKuO16KFSsfV99B/4WgMbGBRNznvoQBg3lfx+6hZa20JIBe19zh4VAE3AUNFBxhFBG1D4s8DFaVAEDn4bE3pSGeBxmsOfdnLogbYWpr81rTQ3cF/58/DssYjdoB2gkFeeTKHcfD4h3dvArKKeY7NvF1sqwSI0ElRUA3n5tAvYIw1Ip1XgxNHQVE1L+PP/KJn0Zjb8nc6gIHyn56sVsDnb3WtFDOsHR7XT+22UGShFKY3kjS8HCaK90eQrfvJO/3oH2zEE9y8yJQREOZcBaXY+DVsIQAZ4Y/0KsdeM=
+
 cache:
   directories:
-  - "$HOME/.m2"
+    - ~/.m2/repository
+
 notifications:
   email:
-  - ro.franchini@gmail.com
-script: "./mvnw deploy --settings .travis/settings.xml"
+    - ro.franchini@gmail.com
+
+script:
+  ./mvnw deploy --settings .travis/settings.xml
+
 jdk:
-- openjdk8
+  - openjdk8

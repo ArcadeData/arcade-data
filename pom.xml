@@ -28,6 +28,8 @@
     <packaging>jar</packaging>
     <version>1.0.0-SNAPSHOT</version>
 
+    <description>Arcade Data: small library for fast data manipulation</description>
+    <url></url>
     <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -44,12 +46,45 @@
         <assertj-guava.version>3.2.1</assertj-guava.version>
     </properties>
 
+    <developers>
+        <developer>
+            <id>robfrank</id>
+            <name>Roberto Franchini</name>
+            <email>r.franchini@arcadeanalytics.com</email>
+            <timezone>+1</timezone>
+        </developer>
+        <developer>
+            <id>gabrieleponzi</id>
+            <name>Gabriele Ponzi</name>
+            <email>g.ponzi@arcadeanalytics.com</email>
+            <timezone>+1</timezone>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+    <scm>
+        <connection>scm:git:https://github.com/ArcadeAnalytics/arcade-data.git</connection>
+        <url>https://github.com/ArcadeAnalytics/arcade-data</url>
+    </scm>
+
     <distributionManagement>
         <snapshotRepository>
             <id>ossrh</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
+        <repository>
+            <id>ossrh</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
     </distributionManagement>
+
     <build>
         <sourceDirectory>src/main/kotlin</sourceDirectory>
         <testSourceDirectory>src/test/kotlin</testSourceDirectory>
@@ -225,6 +260,11 @@
     <profiles>
         <profile>
             <id>release</id>
+            <activation>
+                <property>
+                    <name>release</name>
+                </property>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
