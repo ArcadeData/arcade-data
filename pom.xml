@@ -18,15 +18,13 @@
   limitations under the License.
   #L%
   -->
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.arcadeanalytics</groupId>
     <artifactId>arcade-data</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.0-SNAPSHOT</version>
+    <version>1.0.0</version>
 
     <name>Arcade Data</name>
     <url>https://arcadeanalytics.com/</url>
@@ -75,7 +73,8 @@
     <scm>
         <connection>scm:git:https://github.com/ArcadeAnalytics/arcade-data.git</connection>
         <url>https://github.com/ArcadeAnalytics/arcade-data</url>
-    </scm>
+      <tag>arcade-data-1.0.0</tag>
+  </scm>
 
     <distributionManagement>
         <snapshotRepository>
@@ -287,7 +286,7 @@
                 <artifactId>license-maven-plugin</artifactId>
                 <version>1.17</version>
                 <configuration>
-                    <verbose></verbose>
+                    <verbose />
                     <projectName>Arcade Data</projectName>
                     <inceptionYear>2018</inceptionYear>
                     <organizationName>ArcadeAnalytics</organizationName>
