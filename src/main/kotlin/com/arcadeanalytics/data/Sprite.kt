@@ -132,7 +132,7 @@ class Sprite {
     fun load(input: Map<String, Any>): Sprite {
         input.entries
                 .filter { it.value != null }
-                .forEach { it -> add(it.key, it.value) }
+                .forEach { add(it.key, it.value) }
         return this
     }
 
@@ -331,12 +331,12 @@ class Sprite {
         return result
     }
 
-    override fun equals(obj: Any?): Boolean {
-        if (this === obj) return true
-        if (obj == null) return false
-        if (javaClass != obj.javaClass) return false
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null) return false
+        if (javaClass != other.javaClass) return false
 
-        val other = obj as Sprite
+        val other = other as Sprite
 
         if (data != other.data) return false
 
