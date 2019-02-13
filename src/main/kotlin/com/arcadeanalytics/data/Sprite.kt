@@ -25,7 +25,13 @@ import com.google.common.collect.Lists
 import java.util.*
 import java.util.regex.Pattern
 
-
+/**
+ * The Sprite is a flexible data container based on ListMultimap to be used in ETL tasks
+ *
+ * The unit test ha a lot of usage examples
+ *
+ * @author Roberto Franchini
+ */
 class Sprite {
 
     val data: ListMultimap<String, Any?> = ArrayListMultimap.create()
