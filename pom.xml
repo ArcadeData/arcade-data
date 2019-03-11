@@ -42,7 +42,7 @@
         <maven-surefire-plugin.version>3.0.0-M3</maven-surefire-plugin.version>
         <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
         <dokka.version>0.9.17</dokka.version>
-        <guava.version>27.0.1-jre</guava.version>
+        <guava.version>27.1-jre</guava.version>
         <assertj-core.version>3.12.1</assertj-core.version>
         <assertj-guava.version>3.2.1</assertj-guava.version>
     </properties>
