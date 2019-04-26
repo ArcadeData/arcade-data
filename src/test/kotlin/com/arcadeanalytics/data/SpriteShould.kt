@@ -19,7 +19,7 @@
  */
 package com.arcadeanalytics.data
 
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.util.Lists
 import org.assertj.guava.api.Assertions.assertThat
 import org.assertj.guava.api.Assertions.entry
@@ -44,7 +44,7 @@ class SpriteShould {
                 .add("field2", 10)
                 .add("field3", false)
 
-        Assertions.assertThat(sprite.entries()).contains(
+        assertThat(sprite.entries()).contains(
                 entry("field1", "value1"),
                 entry("field2", 10),
                 entry("field3", false)
@@ -61,10 +61,10 @@ class SpriteShould {
                 .add("field2", 10)
                 .add("field3", false)
 
-        Assertions.assertThat(sprite.rawValuesOf<String>("field1")).isNotEmpty
+        assertThat(sprite.rawValuesOf<String>("field1")).isNotEmpty
                 .hasSize(3)
 
-        Assertions.assertThat(sprite.entries()).contains(
+        assertThat(sprite.entries()).contains(
                 entry("field1", "value1"),
                 entry("field1", "value2"),
                 entry("field1", "value3"),
@@ -81,52 +81,52 @@ class SpriteShould {
                 .add("field2", 10)
                 .add("field3", false)
 
-        Assertions.assertThat(sprite.valueOf("field1")).isEqualTo("value1")
-        Assertions.assertThat(sprite.valueOf("field2")).isEqualTo("10")
-        Assertions.assertThat(sprite.valueOf("field3")).isEqualTo("false")
+        assertThat(sprite.valueOf("field1")).isEqualTo("value1")
+        assertThat(sprite.valueOf("field2")).isEqualTo("10")
+        assertThat(sprite.valueOf("field3")).isEqualTo("false")
 
     }
 
     @Test
-    internal fun `return multiValue as string`() {
+    internal fun `return multi value as string`() {
         sprite.add("field1", 10)
                 .add("field1", 20)
                 .add("field1", 30)
 
 
-        Assertions.assertThat(sprite.valuesOf("field1")).contains("10", "20", "30")
+        assertThat(sprite.valuesOf("field1")).contains("10", "20", "30")
 
     }
 
     @Test
-    internal fun `return multi value as type`() {
+    internal fun `return multi value as int type`() {
         sprite.add("field1", 10)
                 .add("field1", 20)
                 .add("field1", 30)
 
 
-        Assertions.assertThat(sprite.rawValuesOf<Int>("field1")).contains(10, 20, 30)
+        assertThat(sprite.rawValuesOf<Int>("field1")).contains(10, 20, 30)
 
     }
 
     @Test
-    internal fun `return single value as type`() {
+    internal fun `return single value typed`() {
         sprite.add("field1", "value1")
                 .add("field2", 10)
                 .add("field3", false)
 
-        Assertions.assertThat(sprite.rawValueOf<String>("field1")).isEqualTo("value1")
-        Assertions.assertThat(sprite.rawValueOf<Int>("field2")).isEqualTo(10)
-        Assertions.assertThat(sprite.rawValueOf<Boolean>("field3")).isEqualTo(false)
+        assertThat(sprite.rawValueOf<String>("field1")).isEqualTo("value1")
+        assertThat(sprite.rawValueOf<Int>("field2")).isEqualTo(10)
+        assertThat(sprite.rawValueOf<Boolean>("field3")).isEqualTo(false)
 
     }
 
     @Test
-    internal fun shouldCopySingleValueField() {
+    internal fun `copy single value field`() {
         sprite.add("field", "value")
                 .copy("field", "copyOfField")
 
-        Assertions.assertThat(sprite.entries()).contains(
+        assertThat(sprite.entries()).contains(
                 entry("field", "value"),
                 entry("copyOfField", "value")
 
@@ -134,16 +134,16 @@ class SpriteShould {
     }
 
     @Test
-    internal fun shouldCopyMultiValuesField() {
+    internal fun `copy multi values field`() {
         sprite.add("field", "value1")
                 .add("field", "value2")
                 .add("field", "value3")
                 .add("field", "value4")
                 .copy("field", "copyOfField")
 
-        Assertions.assertThat(sprite.entries()).isNotEmpty
+        assertThat(sprite.entries()).isNotEmpty
 
-        Assertions.assertThat(sprite.entries()).contains(
+        assertThat(sprite.entries()).contains(
                 entry("field", "value1"),
                 entry("field", "value2"),
                 entry("field", "value3"),
@@ -157,7 +157,7 @@ class SpriteShould {
     }
 
     @Test
-    internal fun shouldNotAddsEmptyValues() {
+    internal fun `not adds empty values`() {
         sprite.addAll("field", Lists.emptyList())
 
         assertThat(sprite.data).isEmpty()
@@ -170,7 +170,7 @@ class SpriteShould {
 
 
     @Test
-    internal fun shouldRenameField() {
+    internal fun `rename field`() {
         sprite.add("field", "value1")
                 .add("field", "value2")
                 .add("field", "value3")
@@ -187,9 +187,9 @@ class SpriteShould {
 
 
     @Test
-    internal fun shouldRenameWithLambda() {
+    internal fun `rename with lambda`() {
         sprite.add("a_field", "value1")
-                .rename(Pattern.compile("a_.*"), { v: String -> v.removePrefix("a_") })
+                .rename(Pattern.compile("a_.*")) { v: String -> v.removePrefix("a_") }
 
         assertThat(sprite.data)
                 .contains(entry("field", "value1"))
@@ -199,15 +199,15 @@ class SpriteShould {
     }
 
     @Test
-    internal fun shouldJoinFieldValues() {
+    internal fun `join field values`() {
         sprite.add("field", "value1")
                 .add("field", "value2")
                 .add("field", "value3")
                 .add("field", "value4")
                 .joinValuesOf("field", "\n", "VALUES\n", "\nEND")
 
-        Assertions.assertThat(sprite.isSingleValue("field")).isTrue()
-        Assertions.assertThat(sprite.valueOf("field"))
+        assertThat(sprite.isSingleValue("field")).isTrue()
+        assertThat(sprite.valueOf("field"))
                 .isEqualTo("""VALUES
                     |value1
                     |value2
@@ -218,60 +218,86 @@ class SpriteShould {
     }
 
     @Test
-    internal fun shouldSplitFieldValue() {
+    internal fun `split field value`() {
         sprite.add("field", "value1 value2 value3 value4")
                 .splitValues("field", " ")
 
-        Assertions.assertThat(sprite.isMultiValue("field")).isTrue()
-        Assertions.assertThat(sprite.valuesOf("field"))
+        assertThat(sprite.isMultiValue("field")).isTrue()
+        assertThat(sprite.valuesOf("field"))
                 .contains("value1", "value2", "value3", "value4")
     }
 
 
     @Test
-    internal fun shouldBeIdempotentOnRenamingNotPresentField() {
+    internal fun `be idempotent on renaming not present field`() {
         sprite.rename("notPresent", "renamed")
 
-        assertThat(sprite.data).isEmpty()
+        assertThat(sprite.isEmpty()).isTrue()
 
     }
 
     @Test
-    internal fun shouldRetrieveFieldNames() {
+    internal fun `retrieve field names`() {
         sprite.add("field", "value")
                 .add("field2", "value2")
                 .add("field3", "value3")
 
-        Assertions.assertThat(sprite.fields()).contains("field", "field2", "field3")
+        assertThat(sprite.fields())
+                .contains("field", "field2", "field3")
 
     }
 
     @Test
-    internal fun `say if value exeists`() {
-        sprite.add("field", "value")
-
-        Assertions.assertThat(sprite.hasValue("value")).isTrue()
-        Assertions.assertThat(sprite.hasValue("field", "value")).isTrue()
-
-        Assertions.assertThat(sprite.hasNotValue("notPresent")).isTrue()
-        Assertions.assertThat(sprite.hasNotValue("field", "NotPresent")).isTrue()
-
-    }
-
-
-    @Test
-    internal fun shouldRetrieveFieldNamesWithPattern() {
+    internal fun `retrieve field names with regexp`() {
         sprite.add("field1", "value")
                 .add("field2", "value2")
                 .add("field3", "value3")
+                .add("a_field", "value")
 
-        Assertions.assertThat(sprite.fields(Pattern.compile("field.*")))
+        assertThat(sprite.fields(Pattern.compile("field.*")))
                 .contains("field1", "field2", "field3")
+
+        assertThat(sprite.fields(Regex("field.*")))
+                .contains("field1", "field2", "field3")
+
+        assertThat(sprite.fields(Regex("a_.*")))
+                .contains("a_field")
 
     }
 
     @Test
-    internal fun shouldRemoveField() {
+    internal fun `retrieve field string values with regexp`() {
+        sprite.add("field1", "value")
+                .add("field2", "value2")
+                .add("field3", "value3")
+                .add("a_field", "value")
+
+        assertThat(sprite.valuesOf(Pattern.compile("field.*")))
+                .contains("value", "value2", "value3")
+
+        assertThat(sprite.valuesOf(Regex("field.*")))
+                .contains("value", "value2", "value3")
+
+        assertThat(sprite.valuesOf(Regex("a_.*")))
+                .contains("value")
+
+    }
+
+    @Test
+    internal fun `say if value exists`() {
+        sprite.add("field", "value")
+
+        assertThat(sprite.hasValue("value")).isTrue()
+        assertThat(sprite.hasValue("field", "value")).isTrue()
+
+        assertThat(sprite.hasNotValue("notPresent")).isTrue()
+        assertThat(sprite.hasNotValue("field", "NotPresent")).isTrue()
+
+    }
+
+
+    @Test
+    internal fun `RemoveField`() {
         sprite.add("field", "value")
 
         sprite.remove("field")
@@ -280,7 +306,7 @@ class SpriteShould {
     }
 
     @Test
-    internal fun shouldRemoveFields() {
+    internal fun `RemoveFields`() {
         sprite.add("field", "value")
                 .add("field", "value2")
                 .add("field2", "value2")
@@ -291,7 +317,7 @@ class SpriteShould {
     }
 
     @Test
-    internal fun shouldRemoveFieldsWithPattern() {
+    internal fun `RemoveFieldsWithPattern`() {
         sprite.add("field", "value")
                 .add("field", "value2")
                 .add("field2", "value2")
@@ -302,7 +328,7 @@ class SpriteShould {
     }
 
     @Test
-    internal fun shouldLoadFromMap() {
+    internal fun `LoadFromMap`() {
         val now = LocalDate.now()
         val input = mapOf(
                 "field1" to "value1",
@@ -311,17 +337,17 @@ class SpriteShould {
 
         sprite.load(input)
 
-        Assertions.assertThat(sprite.hasField("field1")).isTrue()
-        Assertions.assertThat(sprite.hasField("field2")).isTrue()
+        assertThat(sprite.hasField("field1")).isTrue()
+        assertThat(sprite.hasField("field2")).isTrue()
 
-        Assertions.assertThat(sprite.hasField("field3")).isTrue()
-        Assertions.assertThat(sprite.valueOf("field3")).isEqualTo(now.toString())
+        assertThat(sprite.hasField("field3")).isTrue()
+        assertThat(sprite.valueOf("field3")).isEqualTo(now.toString())
 
 
     }
 
     @Test
-    internal fun shouldApplyLambdaToAllFieldValues() {
+    internal fun `ApplyLambdaToAllFieldValues`() {
         sprite.add("field", "value")
                 .add("field", "value2")
 
@@ -329,11 +355,11 @@ class SpriteShould {
 
         assertThat(sprite.data).isNotEmpty()
 
-        Assertions.assertThat(sprite.valuesOf("field")).contains("VALUE", "VALUE2")
+        assertThat(sprite.valuesOf("field")).contains("VALUE", "VALUE2")
     }
 
     @Test
-    internal fun shouldApplyLambdaToAllFieldMatchingPattern() {
+    internal fun `ApplyLambdaToAllFieldMatchingPattern`() {
         sprite.add("firstField", "value")
                 .add("secondField", "value2")
 
@@ -341,12 +367,12 @@ class SpriteShould {
 
         assertThat(sprite.data).isNotEmpty()
 
-        Assertions.assertThat(sprite.valuesOf("firstField")).contains("VALUE")
-        Assertions.assertThat(sprite.valuesOf("secondField")).contains("VALUE2")
+        assertThat(sprite.valuesOf("firstField")).contains("VALUE")
+        assertThat(sprite.valuesOf("secondField")).contains("VALUE2")
     }
 
     @Test
-    internal fun shouldApplyLambdaToAllFieldValuesAndStoreOnAnotherField() {
+    internal fun `ApplyLambdaToAllFieldValuesAndStoreOnAnotherField`() {
         sprite.add("field", "value")
                 .add("field", "value2")
 
@@ -355,74 +381,62 @@ class SpriteShould {
 
         assertThat(sprite.data).isNotEmpty()
 
-        Assertions.assertThat(sprite.valuesOf("field")).contains("value", "value2")
-        Assertions.assertThat(sprite.valuesOf("to")).contains("VALUE", "VALUE2")
+        assertThat(sprite.valuesOf("field")).contains("value", "value2")
+        assertThat(sprite.valuesOf("to")).contains("VALUE", "VALUE2")
     }
 
 
     @Test
-    internal fun shouldReturnMapWithSingleValue() {
+    internal fun `ReturnMapWithSingleValue`() {
         val now = LocalDate.now()
         val map = sprite.add("field", "value")
                 .add("field", "value2")
                 .add("field", "value3")
                 .add("dateField", now)
-                .asSingleLevelMap()
+                .asMap()
 
-        Assertions.assertThat(map?.get("field")).isEqualTo("value")
-        Assertions.assertThat(map?.get("dateField")).isEqualTo(now)
+        assertThat(map?.get("field")).isEqualTo("value")
+        assertThat(map?.get("dateField")).isEqualTo(now)
     }
 
     @Test
-    internal fun shouldReturnMapWithSingleValueAsString() {
+    internal fun `ReturnMapWithSingleValueAsString`() {
         val now = LocalDate.now()
         val map = sprite.add("field", "value")
                 .add("field", "value2")
                 .add("field", "value3")
                 .add("dateField", now)
-                .asSingleLevelStringMap()
+                .asStringMap()
 
-        Assertions.assertThat(map.get("field")).isEqualTo("value")
+        assertThat(map.get("field")).isEqualTo("value")
 
 
-        Assertions.assertThat(map.get("dateField")).isEqualTo(now.toString())
+        assertThat(map.get("dateField")).isEqualTo(now.toString())
 
 
     }
 
     @Test
-    internal fun shouldReturnMapWithCollections() {
-        val map = sprite.add("field", "value")
-                .add("field", "value2")
-                .add("field", "value3")
-                .asRawMap()
-
-        Assertions.assertThat(map?.get("field"))
-                .hasSize(3)
-                .contains("value", "value2", "value3")
-    }
-
-    @Test
-    internal fun shouldReturnMap() {
+    internal fun `transform sprite to mutable map of collections`() {
         val map = sprite.add("field", "value")
                 .add("field", "value2")
                 .add("field", "value3")
                 .add("single", "singleValue")
-                .asMap()
+                .asMultimap()
 
-        Assertions.assertThat(map.get("field") as List<String>)
+        assertThat(map?.get("field"))
                 .hasSize(3)
                 .contains("value", "value2", "value3")
 
-        Assertions.assertThat(map.get("single") as String)
-                .isEqualTo("singleValue")
-
+        assertThat(map?.get("single"))
+                .hasSize(1)
+                .containsOnly("singleValue")
 
     }
 
 
     @Test
-    internal fun shouldAnswerOnFieldSize() {
+    internal fun `answer about field's size`() {
 
         sprite.add("field", "value")
                 .add("field", "value2")
@@ -430,41 +444,41 @@ class SpriteShould {
                 .add("dateField", LocalDate.now())
 
         //field
-        Assertions.assertThat(sprite.isMultiValue("field")).isTrue()
-        Assertions.assertThat(sprite.isSingleValue("field")).isFalse()
-        Assertions.assertThat(sprite.sizeOf("field")).isEqualTo(3)
+        assertThat(sprite.isMultiValue("field")).isTrue()
+        assertThat(sprite.isSingleValue("field")).isFalse()
+        assertThat(sprite.sizeOf("field")).isEqualTo(3)
 
 
         //dateField
-        Assertions.assertThat(sprite.isMultiValue("dateField")).isFalse()
-        Assertions.assertThat(sprite.isSingleValue("dateField")).isTrue()
-        Assertions.assertThat(sprite.sizeOf("dateField")).isEqualTo(1)
+        assertThat(sprite.isMultiValue("dateField")).isFalse()
+        assertThat(sprite.isSingleValue("dateField")).isTrue()
+        assertThat(sprite.sizeOf("dateField")).isEqualTo(1)
 
     }
 
     @Test
-    internal fun shouldBeEquals() {
+    internal fun `consider two sprites equals`() {
         sprite.add("f", "v")
 
         val other = Sprite().add("f", "v")
 
-        Assertions.assertThat(sprite).isEqualTo(other)
+        assertThat(sprite).isEqualTo(other)
     }
 
     @Test
-    internal fun testToString() {
+    internal fun `view data as string`() {
         sprite.add("text", "the text")
                 .add("text", "another text")
                 .add("date", LocalDate.parse("20180901", DateTimeFormatter.ofPattern("yyyyMMdd")))
                 .add("age", 10)
 
 
-        Assertions.assertThat(sprite.toString()).isEqualTo("{date=[2018-09-01], text=[the text, another text], age=[10]}")
+        assertThat(sprite.toString()).isEqualTo("{date=[2018-09-01], text=[the text, another text], age=[10]}")
     }
 
 
     @Test
-    internal fun article() {
+    internal fun `show an ETL example`() {
 
         val data = Sprite()
                 .add("age", 90)
@@ -474,20 +488,23 @@ class SpriteShould {
                 .add("text", "third phrase")
                 .add("text", "fourth phrase")
                 .rename("age", "weight")
-                .apply("weight", { v: Float -> v * 2.2 })
+                .apply("weight") { v: Float -> v * 2.2 }
                 .apply("name", String::toUpperCase)
                 .joinValuesOf("text")
 
-
-        println("""name  :: ${data.valueOf("name")}""")
-        println("""weight:: ${data.valueOf("weight")}""")
-        println("""text  :: ${data.valueOf("text")}""")
-
+        assertThat(data.hasField("age"))
+                .isFalse()
+        assertThat(data.rawValueOf<Float>("weight"))
+                .isEqualTo(198.0f)
+        assertThat(data.valueOf("name"))
+                .isEqualTo("ROB")
+        assertThat(data.valueOf("text"))
+                .isEqualTo("first phrase, second phrase, third phrase, fourth phrase")
     }
 
 
     @Test
-    internal fun shouldApply() {
+    internal fun `apply `() {
         sprite.add("f1", "value1")
 
     }

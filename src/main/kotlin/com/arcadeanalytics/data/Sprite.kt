@@ -32,6 +32,8 @@ import java.util.regex.Pattern
  *
  * @author Roberto Franchini
  */
+private const val copySuffix = "____COPY___"
+
 class Sprite {
 
     val data: ListMultimap<String, Any?> = ArrayListMultimap.create()
@@ -92,17 +94,17 @@ class Sprite {
 
 
     fun addAll(field: String, values: Iterable<Any?>): Sprite {
-        values.forEach { it -> add(field, it) }
+        values.forEach { add(field, it) }
         return this
     }
 
     fun addAll(field: String, values: List<Any?>): Sprite {
-        values.forEach { it -> add(field, it) }
+        values.forEach { add(field, it) }
         return this
     }
 
     fun addAllIfNotExists(field: String, values: Iterable<Any>): Sprite {
-        values.forEach { it -> addIfNotExists(field, it) }
+        values.forEach { addIfNotExists(field, it) }
         return this
     }
 
@@ -137,7 +139,6 @@ class Sprite {
 
     fun load(input: Map<String, Any>): Sprite {
         input.entries
-                .filter { it.value != null }
                 .forEach { add(it.key, it.value) }
         return this
     }
@@ -222,7 +223,12 @@ class Sprite {
         return this
     }
 
-    fun joinValuesOf(field: String, separator: CharSequence = ", ", prefix: CharSequence = "", postfix: CharSequence = "", limit: Int = -1, truncated: CharSequence = "..."): Sprite {
+    fun joinValuesOf(field: String,
+                     separator: CharSequence = ", ",
+                     prefix: CharSequence = "",
+                     postfix: CharSequence = "",
+                     limit: Int = -1,
+                     truncated: CharSequence = "..."): Sprite {
 
         val merged = rawValuesOf<String>(field)
                 .joinToString(separator, prefix, postfix, limit, truncated)
@@ -248,10 +254,26 @@ class Sprite {
         return fields(regex)
                 .map { field ->
                     rawValuesOf<Any>(field)
-                            .map { it -> it.toString() }
-                }.flatMap {
+                            .map { it.toString() }
+                }
+                .flatMap {
                     it.toList()
-                }.toList()
+                }
+                .toList()
+
+    }
+
+    fun valuesOf(regex: Pattern): List<String> {
+
+        return fields(regex)
+                .map { field ->
+                    rawValuesOf<Any>(field)
+                            .map { it.toString() }
+                }
+                .flatMap {
+                    it.toList()
+                }
+                .toList()
 
     }
 
@@ -273,34 +295,22 @@ class Sprite {
         return data.get(field).size
     }
 
-    fun asRawMap(): MutableMap<String, MutableCollection<Any?>>? {
+    fun asMultimap(): MutableMap<String, MutableCollection<Any?>>? {
         return data.asMap()
     }
 
-    fun asSingleLevelMap(): MutableMap<String, Any?>? {
+    fun asMap(): MutableMap<String, Any?>? {
         val map = HashMap<String, Any?>()
         for (key in data.keySet()) {
             val values = data.get(key)
-            map.put(key, values.iterator().next())
+            map[key] = values.iterator().next()
         }
 
         return map
     }
 
-    fun asMap(): Map<String, Any?> {
-        val map = HashMap<String, Any?>()
 
-        fields().forEach { f ->
-            if (isMultiValue(f)) map.put(f, valuesOf(f))
-            if (isSingleValue(f)) map.put(f, valueOf(f))
-        }
-
-
-        return map
-    }
-
-
-    fun asSingleLevelStringMap(): Map<String, String> {
+    fun asStringMap(): Map<String, String> {
         val map = HashMap<String, String>()
 
         fields().map { f -> map.put(f, valueOf(f)) }
@@ -308,9 +318,10 @@ class Sprite {
         return map
     }
 
+
     fun splitValues(field: String, separator: String): Sprite {
 
-        val copySuffix = "____COPY___"
+        val copySuffix = copySuffix
         copy(field, "$field$copySuffix")
                 .remove(field)
                 .valuesOf("$field$copySuffix")
@@ -342,9 +353,9 @@ class Sprite {
         if (other == null) return false
         if (javaClass != other.javaClass) return false
 
-        val other = other as Sprite
+        val otherSprite = other as Sprite
 
-        if (data != other.data) return false
+        if (data != otherSprite.data) return false
 
         return true
     }
