@@ -297,7 +297,7 @@ class SpriteShould {
 
 
     @Test
-    internal fun `RemoveField`() {
+    internal fun `remove field`() {
         sprite.add("field", "value")
 
         sprite.remove("field")
@@ -306,7 +306,7 @@ class SpriteShould {
     }
 
     @Test
-    internal fun `RemoveFields`() {
+    internal fun `remove fields`() {
         sprite.add("field", "value")
                 .add("field", "value2")
                 .add("field2", "value2")
@@ -317,7 +317,7 @@ class SpriteShould {
     }
 
     @Test
-    internal fun `RemoveFieldsWithPattern`() {
+    internal fun `remove fields with pattern`() {
         sprite.add("field", "value")
                 .add("field", "value2")
                 .add("field2", "value2")
@@ -328,7 +328,7 @@ class SpriteShould {
     }
 
     @Test
-    internal fun `LoadFromMap`() {
+    internal fun `load from map`() {
         val now = LocalDate.now()
         val input = mapOf(
                 "field1" to "value1",
@@ -347,7 +347,7 @@ class SpriteShould {
     }
 
     @Test
-    internal fun `ApplyLambdaToAllFieldValues`() {
+    internal fun `apply lambda to all field values`() {
         sprite.add("field", "value")
                 .add("field", "value2")
 
@@ -359,7 +359,7 @@ class SpriteShould {
     }
 
     @Test
-    internal fun `ApplyLambdaToAllFieldMatchingPattern`() {
+    internal fun `apply lambda to all fields matching a pattern`() {
         sprite.add("firstField", "value")
                 .add("secondField", "value2")
 
@@ -372,7 +372,7 @@ class SpriteShould {
     }
 
     @Test
-    internal fun `ApplyLambdaToAllFieldValuesAndStoreOnAnotherField`() {
+    internal fun `apply lambda to all field values and store on another field`() {
         sprite.add("field", "value")
                 .add("field", "value2")
 
@@ -387,7 +387,7 @@ class SpriteShould {
 
 
     @Test
-    internal fun `ReturnMapWithSingleValue`() {
+    internal fun `return map with single value`() {
         val now = LocalDate.now()
         val map = sprite.add("field", "value")
                 .add("field", "value2")
@@ -400,7 +400,7 @@ class SpriteShould {
     }
 
     @Test
-    internal fun `ReturnMapWithSingleValueAsString`() {
+    internal fun `return map with single value as string`() {
         val now = LocalDate.now()
         val map = sprite.add("field", "value")
                 .add("field", "value2")
@@ -466,15 +466,18 @@ class SpriteShould {
     }
 
     @Test
-    internal fun `view data as string`() {
+    internal fun `view date as string`() {
         sprite.add("text", "the text")
                 .add("text", "another text")
                 .add("date", LocalDate.parse("20180901", DateTimeFormatter.ofPattern("yyyyMMdd")))
                 .add("age", 10)
 
 
-        assertThat(sprite.toString()).isEqualTo("{date=[2018-09-01], text=[the text, another text], age=[10]}")
+        assertThat(sprite.toString())
+                .isEqualTo("{date=[2018-09-01], text=[the text, another text], age=[10]}")
     }
+
+
 
 
     @Test
@@ -500,13 +503,6 @@ class SpriteShould {
                 .isEqualTo("ROB")
         assertThat(data.valueOf("text"))
                 .isEqualTo("first phrase, second phrase, third phrase, fourth phrase")
-    }
-
-
-    @Test
-    internal fun `apply `() {
-        sprite.add("f1", "value1")
-
     }
 
 
