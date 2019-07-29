@@ -43,7 +43,7 @@
         <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
         <dokka.version>0.9.18</dokka.version>
         <guava.version>28.0-jre</guava.version>
-        <assertj-core.version>3.12.2</assertj-core.version>
+        <assertj-core.version>3.13.0</assertj-core.version>
         <assertj-guava.version>3.2.1</assertj-guava.version>
     </properties>
 
