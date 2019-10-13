@@ -6,7 +6,7 @@ cache:
 
 notifications:
   email:
-    - ro.franchini@gmail.com
+    - arcade@arcadeanalytics.com
 
 script:
   ./mvnw deploy --quiet --settings .travis/settings.xml
