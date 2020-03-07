@@ -24,7 +24,7 @@
     <groupId>com.arcadeanalytics</groupId>
     <artifactId>arcade-data</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.8-SNAPSHOT</version>
+    <version>1.0.8</version>
 
     <name>Arcade Data</name>
     <url>https://arcadeanalytics.com/</url>
@@ -75,7 +75,7 @@
     <scm>
         <connection>scm:git:https://github.com/ArcadeAnalytics/arcade-data.git</connection>
         <url>https://github.com/ArcadeAnalytics/arcade-data</url>
-        <tag>HEAD</tag>
+        <tag>v1.0.8</tag>
     </scm>
 
     <distributionManagement>
